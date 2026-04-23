@@ -1,0 +1,218 @@
+<div class="top-strip">{{ copy().topStrip }}</div>
+
+<header class="main-header">
+  <a class="brand" href="#inicio" [attr.aria-label]="copy().header.brandAriaLabel">
+    <span class="brand-mark" aria-hidden="true">
+      <img class="brand-logo" [src]="brandLogoPath" alt="" />
+    </span>
+    <span class="brand-text"><strong>Retail</strong>Pulse</span>
+  </a>
+
+  <nav class="main-nav" [attr.aria-label]="copy().header.navAriaLabel">
+    <a href="#inicio">{{ copy().header.nav.home }}</a>
+    <a href="#nosotros">{{ copy().header.nav.about }}</a>
+    <a href="#beneficios">{{ copy().header.nav.benefits }}</a>
+    <a href="#preguntas">{{ copy().header.nav.faq }}</a>
+    <a href="#contacto">{{ copy().header.nav.contact }}</a>
+  </nav>
+
+  <div class="header-tools">
+    <button
+      type="button"
+      class="theme-button"
+      (click)="toggleTheme()"
+      [attr.aria-label]="themeToggleLabel()"
+      [attr.title]="themeToggleLabel()">
+      <span class="theme-icon" aria-hidden="true">{{ themeButtonIcon() }}</span>
+    </button>
+
+    <div class="language-switcher" role="group" [attr.aria-label]="copy().header.languageSwitcherAriaLabel">
+      @for (option of languageOptions; track option.code) {
+        <button
+          type="button"
+          class="lang-button"
+          [class.active]="language() === option.code"
+          (click)="setLanguage(option.code)">
+          {{ option.label }}
+        </button>
+      }
+    </div>
+  </div>
+</header>
+
+<main>
+  <section id="inicio" class="hero">
+    <p class="eyebrow">{{ copy().hero.eyebrow }}</p>
+    <h1>{{ copy().hero.title }}</h1>
+    <p class="hero-copy">{{ copy().hero.copy }}</p>
+    <div class="hero-actions">
+      <a class="button button-primary" href="#beneficios">{{ copy().hero.actions.explore }}</a>
+      <a class="button button-ghost" href="#contacto">{{ copy().hero.actions.demo }}</a>
+    </div>
+    <div class="hero-stats">
+      @for (stat of copy().hero.stats; track stat.value) {
+        <article>
+          <h3>{{ stat.value }}</h3>
+          <p>{{ stat.label }}</p>
+        </article>
+      }
+    </div>
+  </section>
+
+  <section id="funcionalidades" class="section">
+    <h2>{{ copy().features.title }}</h2>
+    <p class="section-intro">{{ copy().features.intro }}</p>
+    <div class="feature-grid">
+      @for (feature of copy().features.items; track feature.title) {
+        <article class="feature-card">
+          <h3>{{ feature.title }}</h3>
+          <p>{{ feature.description }}</p>
+        </article>
+      }
+    </div>
+  </section>
+
+  <section id="nosotros" class="section about-section">
+    <div class="about-copy">
+      <h2>{{ copy().about.title }}</h2>
+      @for (paragraph of copy().about.paragraphs; track paragraph) {
+        <p>{{ paragraph }}</p>
+      }
+    </div>
+
+    <div class="team-grid">
+      @for (member of copy().about.team; track member.name) {
+        <article class="team-card">
+          @if (profileImagePath(member.name); as profileImage) {
+            <img class="avatar-photo" [src]="profileImage" [alt]="member.name" loading="lazy" decoding="async" />
+          } @else {
+            <div class="avatar">{{ member.avatar }}</div>
+          }
+          <h3>{{ member.name }}</h3>
+          <p>{{ member.role }}</p>
+        </article>
+      }
+    </div>
+  </section>
+
+  <section id="beneficios" class="section benefits-showcase">
+    <h2 class="benefits-accessible-title">{{ copy().benefits.title }}</h2>
+
+    @for (group of copy().benefits.groups; track group.title; let groupIndex = $index) {
+      <div class="benefits-group">
+        <p class="benefits-group-title">{{ group.title }}</p>
+        <div class="benefits-columns">
+          @for (benefit of group.items; track benefit.title) {
+            <article class="benefit-column">
+              <div [class]="benefit.className" aria-hidden="true">
+                @if (benefitImagePath(benefit.className); as benefitImage) {
+                  <img class="benefit-image" [src]="benefitImage" alt="" loading="lazy" decoding="async" />
+                } @else {
+                  {{ benefit.illustration }}
+                }
+              </div>
+              <h3 class="benefit-pill-title">{{ benefit.title }}</h3>
+              <p class="benefit-detail-card">{{ benefit.detail }}</p>
+            </article>
+          }
+        </div>
+      </div>
+
+      @if (groupIndex < copy().benefits.groups.length - 1) {
+        <div class="benefits-divider" aria-hidden="true"></div>
+      }
+    }
+  </section>
+
+  <section id="testimonios" class="section testimonials">
+    <h2>{{ copy().testimonials.title }}</h2>
+    <div class="testimonial-grid">
+      @for (item of copy().testimonials.items; track item.author) {
+        <blockquote class="testimonial-card">
+          {{ item.quote }}
+          <footer>{{ item.author }}</footer>
+        </blockquote>
+      }
+    </div>
+  </section>
+
+  <section id="preguntas" class="section">
+    <h2>{{ copy().faq.title }}</h2>
+    <div class="faq-list">
+      @for (item of copy().faq.items; track item.question; let index = $index) {
+        <details [attr.open]="index === 0 ? '' : null">
+          <summary>{{ item.question }}</summary>
+          <p>{{ item.answer }}</p>
+        </details>
+      }
+    </div>
+  </section>
+
+  <section id="contacto" class="section contact-section">
+    <div class="contact-panel">
+      <div class="contact-copy">
+        <h2>{{ copy().contact.title }}</h2>
+        <p>{{ copy().contact.description }}</p>
+      </div>
+
+      <form class="contact-form" (submit)="onContactSubmit($event)" novalidate>
+        <div class="field-group">
+          <label for="nombre">{{ copy().contact.form.nameLabel }}</label>
+          <input id="nombre" name="nombre" type="text" [placeholder]="copy().contact.form.namePlaceholder" />
+        </div>
+
+        <div class="inline-fields">
+          <div class="field-group">
+            <label for="telefono">{{ copy().contact.form.phoneLabel }}</label>
+            <input
+              id="telefono"
+              name="telefono"
+              type="tel"
+              [placeholder]="copy().contact.form.phonePlaceholder" />
+          </div>
+          <div class="field-group">
+            <label for="email">{{ copy().contact.form.emailLabel }}</label>
+            <input id="email" name="email" type="email" [placeholder]="copy().contact.form.emailPlaceholder" />
+          </div>
+        </div>
+
+        <div class="field-group">
+          <label for="mensaje">{{ copy().contact.form.messageLabel }}</label>
+          <textarea
+            id="mensaje"
+            name="mensaje"
+            rows="4"
+            [placeholder]="copy().contact.form.messagePlaceholder"></textarea>
+        </div>
+
+        <button type="submit" class="button button-primary">{{ copy().contact.form.submit }}</button>
+      </form>
+    </div>
+  </section>
+</main>
+
+<div class="submit-toast" [class.visible]="showContactToast()" role="status" aria-live="polite">
+  {{ contactToastMessage() }}
+</div>
+
+<footer class="main-footer">
+  <div class="footer-grid">
+    <div>
+      <h3>{{ copy().footer.brandTitle }}</h3>
+      <p>{{ copy().footer.brandDescription }}</p>
+    </div>
+    <div>
+      <h4>{{ copy().footer.linksTitle }}</h4>
+      <a href="#nosotros">{{ copy().header.nav.about }}</a>
+      <a href="#beneficios">{{ copy().header.nav.benefits }}</a>
+      <a href="#preguntas">{{ copy().footer.faqLink }}</a>
+    </div>
+    <div>
+      <h4>{{ copy().footer.contactTitle }}</h4>
+      <p>{{ copy().footer.email }}</p>
+      <p>{{ copy().footer.phone }}</p>
+      <p>{{ copy().footer.location }}</p>
+    </div>
+  </div>
+  <p class="footer-bottom">{{ footerCopyright() }}</p>
+</footer>
