@@ -6,6 +6,7 @@ import { Language } from './i18n/translations';
 type Theme = 'light' | 'dark';
 
 const THEME_STORAGE_KEY = 'retailpulse.theme';
+const WEB_APPLICATION_URL = 'https://polite-sea-0e075210f.7.azurestaticapps.net';
 
 @Component({
   selector: 'app-root',
@@ -40,6 +41,8 @@ export class App implements OnDestroy {
   protected readonly theme = signal<Theme>(this.resolveInitialTheme());
   protected readonly showContactToast = signal(false);
   protected readonly brandLogoPath = '/assets/images/logo-retailpulse.png';
+  protected readonly webApplicationUrl = WEB_APPLICATION_URL;
+  protected readonly registerUrl = `${WEB_APPLICATION_URL}/register`;
 
   protected readonly themeButtonIcon = computed(() => (this.theme() === 'dark' ? '\u2600' : '\u263E'));
   protected readonly contactToastMessage = computed(() =>
@@ -100,6 +103,10 @@ export class App implements OnDestroy {
 
   protected footerCopyright(): string {
     return this.copy().footer.bottom.replace('{{year}}', String(this.currentYear));
+  }
+
+  protected registerPlanUrl(planId: string): string {
+    return `${this.registerUrl}?plan=${encodeURIComponent(planId)}`;
   }
 
   protected profileImagePath(name: string): string | null {

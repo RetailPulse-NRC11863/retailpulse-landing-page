@@ -22,6 +22,14 @@ type FaqItem = {
   question: string;
 };
 
+type PricingPlan = {
+  description: string;
+  features: string[];
+  id: string;
+  name: string;
+  price: string;
+};
+
 type TeamMember = {
   avatar: string;
   name: string;
@@ -88,6 +96,7 @@ export type TranslationContent = {
       contact: string;
       faq: string;
       home: string;
+      pricing: string;
     };
     navAriaLabel: string;
   };
@@ -102,6 +111,12 @@ export type TranslationContent = {
       label: string;
       value: string;
     }>;
+    title: string;
+  };
+  pricing: {
+    cta: string;
+    intro: string;
+    plans: PricingPlan[];
     title: string;
   };
   testimonials: {
@@ -124,6 +139,7 @@ export const TRANSLATIONS: Record<Language, TranslationContent> = {
         about: 'Nosotros',
         faq: 'Preguntas frecuentes',
         benefits: 'Beneficios',
+        pricing: 'Planes',
         contact: 'Contacto'
       }
     },
@@ -254,6 +270,35 @@ export const TRANSLATIONS: Record<Language, TranslationContent> = {
         }
       ]
     },
+    pricing: {
+      title: 'Planes para empezar con RetailPulse',
+      intro:
+        'Selecciona el plan que mejor se adapta a tu tienda y continua el registro directamente en la aplicacion web.',
+      cta: 'Seleccionar plan',
+      plans: [
+        {
+          id: 'starter',
+          name: 'Starter',
+          price: 'S/ 49 al mes',
+          description: 'Para tiendas pequenas que quieren digitalizar inventario y busqueda asistida.',
+          features: ['Catalogo y stock base', 'Kiosko de busqueda', 'Configuracion de tienda']
+        },
+        {
+          id: 'growth',
+          name: 'Growth',
+          price: 'S/ 99 al mes',
+          description: 'Para negocios que necesitan operar con alertas, tareas y metricas por zona.',
+          features: ['Alertas operativas', 'Tareas para staff', 'Dashboard administrativo']
+        },
+        {
+          id: 'premium',
+          name: 'Premium',
+          price: 'S/ 149 al mes',
+          description: 'Para tiendas que quieren analitica avanzada, conversion y recomendaciones.',
+          features: ['Mapas de calor', 'Recomendaciones comerciales', 'Reportes de conversion']
+        }
+      ]
+    },
     testimonials: {
       title: 'Testimonios',
       items: [
@@ -334,6 +379,7 @@ export const TRANSLATIONS: Record<Language, TranslationContent> = {
         about: 'About',
         faq: 'FAQ',
         benefits: 'Benefits',
+        pricing: 'Plans',
         contact: 'Contact'
       }
     },
@@ -459,6 +505,35 @@ export const TRANSLATIONS: Record<Language, TranslationContent> = {
                 'Let buyers verify availability and prices instantly by entering their ID. By promoting self-service, repeated questions to staff decrease and customer satisfaction improves.'
             }
           ]
+        }
+      ]
+    },
+    pricing: {
+      title: 'Plans to start with RetailPulse',
+      intro:
+        'Choose the plan that fits your store and continue registration directly in the web application.',
+      cta: 'Select plan',
+      plans: [
+        {
+          id: 'starter',
+          name: 'Starter',
+          price: 'S/ 49 per month',
+          description: 'For small stores that want to digitize inventory and assisted search.',
+          features: ['Basic catalog and stock', 'Search kiosk', 'Store setup']
+        },
+        {
+          id: 'growth',
+          name: 'Growth',
+          price: 'S/ 99 per month',
+          description: 'For businesses that need alerts, staff tasks, and zone metrics.',
+          features: ['Operational alerts', 'Staff tasks', 'Admin dashboard']
+        },
+        {
+          id: 'premium',
+          name: 'Premium',
+          price: 'S/ 149 per month',
+          description: 'For stores that want advanced analytics, conversion, and recommendations.',
+          features: ['Heatmaps', 'Commercial recommendations', 'Conversion reports']
         }
       ]
     },

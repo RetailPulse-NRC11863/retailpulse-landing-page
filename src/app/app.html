@@ -12,11 +12,14 @@
     <a href="#inicio">{{ copy().header.nav.home }}</a>
     <a href="#nosotros">{{ copy().header.nav.about }}</a>
     <a href="#beneficios">{{ copy().header.nav.benefits }}</a>
+    <a href="#planes">{{ copy().header.nav.pricing }}</a>
     <a href="#preguntas">{{ copy().header.nav.faq }}</a>
     <a href="#contacto">{{ copy().header.nav.contact }}</a>
   </nav>
 
   <div class="header-tools">
+    <a class="login-link" [href]="webApplicationUrl + '/login'">{{ copy().header.login }}</a>
+
     <button
       type="button"
       class="theme-button"
@@ -46,8 +49,8 @@
     <h1>{{ copy().hero.title }}</h1>
     <p class="hero-copy">{{ copy().hero.copy }}</p>
     <div class="hero-actions">
-      <a class="button button-primary" href="#beneficios">{{ copy().hero.actions.explore }}</a>
-      <a class="button button-ghost" href="#contacto">{{ copy().hero.actions.demo }}</a>
+      <a class="button button-primary" [href]="webApplicationUrl">{{ copy().hero.actions.explore }}</a>
+      <a class="button button-ghost" [href]="registerUrl">{{ copy().hero.actions.demo }}</a>
     </div>
     <div class="hero-stats">
       @for (stat of copy().hero.stats; track stat.value) {
@@ -122,6 +125,33 @@
         <div class="benefits-divider" aria-hidden="true"></div>
       }
     }
+  </section>
+
+  <section id="planes" class="section pricing-section">
+    <h2>{{ copy().pricing.title }}</h2>
+    <p class="section-intro">{{ copy().pricing.intro }}</p>
+
+    <div class="pricing-grid">
+      @for (plan of copy().pricing.plans; track plan.id) {
+        <article class="pricing-card">
+          <div>
+            <h3>{{ plan.name }}</h3>
+            <p class="plan-price">{{ plan.price }}</p>
+            <p class="plan-description">{{ plan.description }}</p>
+          </div>
+
+          <ul>
+            @for (feature of plan.features; track feature) {
+              <li>{{ feature }}</li>
+            }
+          </ul>
+
+          <a class="button button-primary plan-button" [href]="registerPlanUrl(plan.id)">
+            {{ copy().pricing.cta }}
+          </a>
+        </article>
+      }
+    </div>
   </section>
 
   <section id="testimonios" class="section testimonials">
@@ -205,6 +235,7 @@
       <h4>{{ copy().footer.linksTitle }}</h4>
       <a href="#nosotros">{{ copy().header.nav.about }}</a>
       <a href="#beneficios">{{ copy().header.nav.benefits }}</a>
+      <a href="#planes">{{ copy().header.nav.pricing }}</a>
       <a href="#preguntas">{{ copy().footer.faqLink }}</a>
     </div>
     <div>
